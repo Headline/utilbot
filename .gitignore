@@ -14,9 +14,9 @@ Cargo.lock
 
 # Environment configuration containing sensitive information
 .env
-
 # An unused legacy folder with data relevant to the late facts feature
 /facts/
-
 # Markov data generated for each server
 /markov/ 
+# IntelliJ cache
+/.idea/
