@@ -9,7 +9,7 @@ use crate::cache::MarkovCache;
 #[command]
 #[sub_commands(about)]
 pub async fn chat(ctx: &Context, msg: &Message, _args: Args) -> CommandResult {
-    let data = ctx.data.write().await;
+    let data = ctx.data.read().await;
     let markov = data.get::<MarkovCache>().unwrap().read().await;
 
     let chat = markov.get_string(msg.guild_id.unwrap());

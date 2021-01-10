@@ -16,7 +16,7 @@ quick-xml = { version = "0.20.0", features = ["serialize"] }
 markov = "1.1.0"
 regex = "1.4.2"
 rand = "0.8.0"
-time = "*"
+#time = "*"
 
 [dependencies.serenity]
 version = "0.9"

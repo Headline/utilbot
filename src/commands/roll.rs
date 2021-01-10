@@ -1,4 +1,4 @@
-use serenity::framework::standard::{macros::command, Args, CommandResult};
+use serenity::framework::standard::{macros::command, Args, CommandResult, CommandError};
 use serenity::model::prelude::*;
 use serenity::prelude::*;
 
@@ -18,6 +18,11 @@ pub async fn roll(ctx: &Context, msg: &Message, args: Args) -> CommandResult {
         if num > 1 {
             high = num;
         }
+    }
+    else if !args.is_empty() {
+        return Err(CommandError::from(
+            format!("Unable to parse roll - input must be a non-negative integer.\n\n Rejected: `{}`", args.current().unwrap()),
+        ));
     }
 
     let num : i32 = rand::thread_rng().gen_range(1..high);

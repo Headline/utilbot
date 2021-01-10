@@ -4,9 +4,6 @@ use tokio::sync::RwLock;
 use crate::cache::MarkovCache;
 use std::thread::sleep;
 
-extern crate time;
-use time::PreciseTime;
-
 pub fn start_listening(data: Arc<RwLock<TypeMap>>) {
     tokio::spawn(async move {
         let data = data.clone();
