@@ -57,6 +57,11 @@ pub async fn help(ctx: &Context, msg: &Message, args: Args) -> CommandResult {
                 emb.field("Example", format!("{}chat", prefix), false);
                 "Outputs a chat response generated from the guild's chat messages.\nMessage generation is random (markov chain) and all chat data is stored on disk as graph form."
             }
+            "repeat" => {
+                emb.title("Repeat command");
+                emb.field("Example", format!("{}repeat 5", prefix), false);
+                "Repeats the last message you sent a number of times."
+            }
             "osrs lookup" => {
                 emb.title("OSRS Lookup command");
                 emb.field("Example", format!("{}osrs lookup <playername>", prefix), false);
@@ -90,6 +95,7 @@ pub async fn help(ctx: &Context, msg: &Message, args: Args) -> CommandResult {
             e.field("chat", "``` Generates a random message based on chat history ```", false);
             e.field("osrs lookup", "``` Looks up a player's stats on Jagex's Old School Runescape's high scores ```", false);
             e.field("info", "``` Outputs some information regarding the bot's owner, project license, and GitHub repository ```", false);
+            e.field("repeat", "``` Repeats the last message you sent a number of times ```", false);
             e
         })
     }).await?;
