@@ -47,6 +47,12 @@ pub struct MarkovRegexCache;
 impl TypeMapKey for MarkovRegexCache {
     type Value = Arc<RwLock<Regex>>;
 }
+
+pub struct LastMessageCache;
+impl TypeMapKey for LastMessageCache {
+    type Value = Arc<tokio::sync::Mutex<lru_cache::LruCache<UserId, String>>>;
+}
+
 pub async fn fill(
     data: Arc<RwLock<TypeMap>>,
     prefix: &str,
@@ -64,5 +70,6 @@ pub async fn fill(
 
     data.insert::<MarkovRegexCache>(Arc::new(RwLock::new(Regex::new(r"(\?|!|/|-|\+|@|#|\$|%|\^|&|\*|\.)[A-Za-z0-9_.]").unwrap())));
     data.insert::<GuildCountCache>(Arc::new(RwLock::new(GuildCount{count:0})));
+    data.insert::<LastMessageCache>(Arc::new(tokio::sync::Mutex::new(lru_cache::LruCache::new(36))));
     Ok(())
 }

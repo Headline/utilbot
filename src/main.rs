@@ -34,11 +34,11 @@ extern crate pretty_env_logger;
 
 /** Command Registration **/
 use crate::commands::{
-    help::*, ping::*, chat::*, roll::*, osrs::*, info::*
+    help::*, ping::*, chat::*, roll::*, osrs::*, info::*, repeat::*
 };
 
 #[group]
-#[commands(ping, help, chat, roll, osrs, info)]
+#[commands(ping, help, chat, roll, osrs, info, repeat)]
 struct General;
 
 /** Spawn bot **/

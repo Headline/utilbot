@@ -28,7 +28,7 @@ use serenity::{
 
 use crate::utls::discordhelpers;
 use serenity::framework::standard::DispatchError;
-use crate::cache::{MarkovCache, MarkovRegexCache, GuildCountCache};
+use crate::cache::{MarkovCache, MarkovRegexCache, GuildCountCache, LastMessageCache};
 use crate::markov::markovsaver;
 
 pub struct Handler; // event handler for serenity
@@ -64,6 +64,9 @@ impl EventHandler for Handler {
             let mut markov = data.get::<MarkovCache>().unwrap().write().await;
             markov.add_message(msg.guild_id.unwrap(), &msg.content);
         }
+
+        let mut message_cache = data.get::<LastMessageCache>().unwrap().lock().await;
+        message_cache.insert(msg.author.id, msg.content);
     }
 
     async fn ready(&self, ctx: Context, rdy: Ready) {
