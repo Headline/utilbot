@@ -31,7 +31,7 @@ pub async fn repeat(ctx: &Context, msg: &Message, args: Args) -> CommandResult {
         ));
     }
 
-    static MAX_MESSAGE_LEN: usize = 1000;
+    const MAX_MESSAGE_LEN: usize = 1000;
     let mut repeat_count = user_input.unwrap();
     {
         let data = ctx.data.read().await;
@@ -51,7 +51,7 @@ pub async fn repeat(ctx: &Context, msg: &Message, args: Args) -> CommandResult {
             }
             None => {
                 return Err(CommandError::from(
-                    format!("Unable to find your last message - ensure it was sent recently! I can be forgetful sometimes...")
+                    "Unable to find your last message - ensure it was sent recently! I can be forgetful sometimes..."
                 ));
             }
         }

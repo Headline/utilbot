@@ -50,17 +50,19 @@ impl MarkovManager {
     pub fn delete_guild(&mut self, guild : GuildId) {
         self.chains.remove(&guild);
         std::fs::remove_file(format!("markov/{}_markov", guild))
-            .expect(&format!("Unable to clean data for guild {}", guild));
+            .unwrap_or_else(|_| panic!("Unable to clean data for guild {}", guild));
     }
 
     pub fn load_guild(&mut self, guild : GuildId) {
         let chain = Chain::load(format!("markov/{}_markov", guild));
-        if chain.is_err() {
-            debug!("New guild joined, adding new markov chain.");
-            self.chains.insert(guild, Chain::new());
-        }
-        else {
-            self.chains.insert(guild, chain.unwrap());
+        match chain {
+            Ok(c) => {
+                self.chains.insert(guild, c);
+            }
+            Err(_) => {
+                debug!("New guild joined, adding new markov chain.");
+                self.chains.insert(guild, Chain::new());
+            }
         }
     }
 

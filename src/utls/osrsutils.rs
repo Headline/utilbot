@@ -56,13 +56,11 @@ impl PlayerStats {
         let result = res.unwrap();
         let body = result.text().await.unwrap();
         let mut levels = Vec::new();
-        let mut count = 0;
-        for line in body.split("\n") {
-            let level = line.split(",")
+        for (count, line) in body.split('\n').enumerate() {
+            let level = line.split(',')
                 .map(|x| x.parse::<i32>().unwrap_or_else(|_| 0))
                 .collect::<Vec<i32>>()[1];
             levels.push(level);
-            count+=1;
             if count > 23 {
                 break;
             }

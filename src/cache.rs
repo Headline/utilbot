@@ -21,7 +21,7 @@ use std::sync::Arc;
 use tokio::sync::RwLock;
 use serenity::model::id::UserId;
 use std::error::Error;
-use crate::markov::markov::MarkovManager;
+use crate::markov_tools::markov::MarkovManager;
 use regex::Regex;
 
 /** Caching **/

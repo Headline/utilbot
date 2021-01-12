@@ -24,9 +24,9 @@ use crate::utls::constants::*;
 
 #[command]
 pub async fn info(ctx: &Context, msg: &Message, _args: Args) -> CommandResult {
-    const VERSION: &'static str = env!("CARGO_PKG_VERSION");
-    const AUTHOR: &'static str = env!("CARGO_PKG_AUTHORS");
-    const DESCRIPTION: &'static str = env!("CARGO_PKG_DESCRIPTION");
+    const VERSION: &str = env!("CARGO_PKG_VERSION");
+    const AUTHOR: &str = env!("CARGO_PKG_AUTHORS");
+    const DESCRIPTION: &str = env!("CARGO_PKG_DESCRIPTION");
 
 
     let mut emb = CreateEmbed::default();
@@ -36,7 +36,7 @@ pub async fn info(ctx: &Context, msg: &Message, _args: Args) -> CommandResult {
         f
     });
     emb.color(COLOR_OKAY);
-    emb.description(format!("Hello! Thanks for looking into me!"));
+    emb.description("Hello! Thanks for looking into me!");
     emb.field("Version", VERSION, false);
     emb.field("Description", DESCRIPTION, false);
     emb.field("Author", AUTHOR, false);

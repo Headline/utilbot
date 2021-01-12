@@ -18,7 +18,7 @@ mod cache;
 mod commands;
 mod events;
 mod utls;
-mod markov;
+mod markov_tools;
 
 use serenity::{
     client::bridge::gateway::GatewayIntents,
