@@ -63,10 +63,11 @@ impl EventHandler for Handler {
         if !regex.is_match(&msg.content) {
             let mut markov = data.get::<MarkovCache>().unwrap().write().await;
             markov.add_message(msg.guild_id.unwrap(), &msg.content);
-        }
 
-        let mut message_cache = data.get::<LastMessageCache>().unwrap().lock().await;
-        message_cache.insert(msg.author.id, msg.content);
+            // lets also prevent bot commands from entering the user's last message cache
+            let mut message_cache = data.get::<LastMessageCache>().unwrap().lock().await;
+            message_cache.insert(msg.author.id, msg.content);
+        }
     }
 
     async fn ready(&self, ctx: Context, rdy: Ready) {
