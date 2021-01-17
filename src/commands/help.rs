@@ -45,6 +45,8 @@ pub async fn help(ctx: &Context, msg: &Message, args: Args) -> CommandResult {
                 emb.title("Roll command");
                 emb.field("Example", format!("{}roll", prefix), false);
                 emb.field("Alternate Example", format!("{}roll 20", prefix), false);
+                emb.field("Alternate Example", format!("{}roll 2d20", prefix), false);
+                emb.field("Alternate Example", format!("{}roll 1d6+3", prefix), false);
                 "Rolls a random number between 1 and 6 by default, if a number is specified then the result will be a number between 1 and said number."
             }
             "info" => {
