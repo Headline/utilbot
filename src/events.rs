@@ -28,6 +28,8 @@ use serenity::{
 
 use crate::utls::discordhelpers;
 use serenity::framework::standard::DispatchError;
+use serenity::model::channel::ReactionType;
+use serenity::model::id::EmojiId;
 use crate::cache::{MarkovCache, MarkovRegexCache, GuildCountCache, LastMessageCache};
 use crate::markov_tools::markovsaver;
 
@@ -58,6 +60,21 @@ impl EventHandler for Handler {
     }
 
     async fn message(&self, ctx: Context, msg: Message) {
+        let mut has_luka_mention = false;
+        for m in &msg.mentions {
+            if m.id.0 == 155921808548167680 {
+                has_luka_mention = true;
+            }
+        }
+
+        if has_luka_mention || msg.author.id.0 == 155921808548167680 {
+            let _ = msg.react(&ctx.http, ReactionType::Custom {
+                animated: true,
+                id: EmojiId::from(975284178528665620),
+                name: Some(String::from("luka"))
+            }).await;
+        }
+
         let data = ctx.data.read().await;
         let regex = data.get::<MarkovRegexCache>().unwrap().read().await;
         if !regex.is_match(&msg.content) {
