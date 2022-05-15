@@ -21,18 +21,15 @@ use serenity::{
         channel::Message,
         event::ResumedEvent,
         gateway::Ready,
-        guild::{Guild},
+        guild::{Guild, GuildUnavailable},
     },
     prelude::*,
 };
 
 use crate::utls::discordhelpers;
 use serenity::framework::standard::DispatchError;
-use serenity::model::channel::ReactionType;
-use serenity::model::id::EmojiId;
 use crate::cache::{MarkovCache, MarkovRegexCache, GuildCountCache, LastMessageCache};
 use crate::markov_tools::markovsaver;
-use serenity::model::prelude::UnavailableGuild;
 
 pub struct Handler; // event handler for serenity
 
@@ -53,7 +50,7 @@ impl EventHandler for Handler {
         }
     }
 
-    async fn guild_delete(&self, ctx: Context, g: UnavailableGuild) {
+    async fn guild_delete(&self, ctx: Context, g: GuildUnavailable) {
         info!("Removing data for guild {}", g.id);
         let data = ctx.data.write().await;
         let mut markov = data.get::<MarkovCache>().unwrap().write().await;
@@ -61,20 +58,6 @@ impl EventHandler for Handler {
     }
 
     async fn message(&self, ctx: Context, msg: Message) {
-        let mut has_luka_mention = false;
-        for m in &msg.mentions {
-            if m.id.0 == 155921808548167680 {
-                has_luka_mention = true;
-            }
-        }
-
-        if has_luka_mention || msg.author.id.0 == 155921808548167680 {
-            let _ = msg.react(&ctx.http, ReactionType::Custom {
-                animated: true,
-                id: EmojiId::from(975284178528665620),
-                name: Some(String::from("luka"))
-            }).await;
-        }
         let data = ctx.data.read().await;
         let regex = data.get::<MarkovRegexCache>().unwrap().read().await;
         if !regex.is_match(&msg.content) {
@@ -121,7 +104,7 @@ pub async fn after(ctx : &Context, msg: &Message, _: &str, command_result: Comma
 }
 
 #[hook]
-pub async fn dispatch_error(ctx: &Context, msg: &Message, error: DispatchError, _ : &str) {
+pub async fn dispatch_error(ctx: &Context, msg: &Message, error: DispatchError) {
     if let DispatchError::Ratelimited(_) = error {
         let emb =
             discordhelpers::build_fail_embed(&msg.author, "You are sending requests too fast!");
