@@ -18,8 +18,8 @@ use serenity::prelude::{TypeMap, TypeMapKey};
 use std::collections::HashMap;
 use std::sync::Arc;
 
-use tokio::sync::RwLock;
-use serenity::model::id::UserId;
+use serenity::prelude::RwLock;
+use serenity::model::id::{ApplicationId, UserId};
 use std::error::Error;
 use crate::markov_tools::markov::MarkovManager;
 use regex::Regex;
@@ -56,7 +56,7 @@ impl TypeMapKey for LastMessageCache {
 pub async fn fill(
     data: Arc<RwLock<TypeMap>>,
     prefix: &str,
-    id: &UserId,
+    id: &ApplicationId,
 ) -> Result<(), Box<dyn Error>> {
     let mut data = data.write().await;
 

@@ -16,7 +16,7 @@
 
 use std::sync::Arc;
 use serenity::prelude::TypeMap;
-use tokio::sync::RwLock;
+use serenity::prelude::RwLock;
 use crate::cache::MarkovCache;
 use std::thread::sleep;
 

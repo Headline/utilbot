@@ -21,6 +21,6 @@ string-builder = "0.2"
 rouler = "0.2.1"
 
 [dependencies.serenity]
-version = "0.9"
+version = "0.11"
 default-features = false
 features = ["collector", "gateway", "builder", "standard_framework", "http", "model", "client", "framework", "utils", "rustls_backend"]
